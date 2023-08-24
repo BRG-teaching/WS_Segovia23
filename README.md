@@ -63,28 +63,6 @@ This results in the following recommended installation directories for Anaconda.
 ~/anaconda3
 ```
 
-**2. Download repository**
-
-Finally, download the workshop repository to your computer and unzip it.
-You should be on the [main repository page](https://github.com/BlockResearchGroup/WS_Anagni2019) now.
-The download button is green and somewhere on the top right of the page.
-
-![Download WS_Segovia23](images/Segovia_repo.png)
-
-Use a sensible location for the download so you can easily find it afterwards.
-For example, create a folder called "Workshops" on your home drive and unzip the repository there.
-
-*On Windows*
-
-```
-%USERPROFILE%\Workshops\WS_Anagni2019
-```
-
-*On Mac*
-
-```
-~/Workshops/WS_Anagni2019
-```
 ## Installation
 
 ** The command line**
@@ -161,20 +139,10 @@ Clone the repository:
     Python: 3.9.13 (CPython)
     Extensions: ['compas-cgal', 'compas-gmsh', 'compas-rrc', 'compas-fab', 'compas-occ', 'compas-view2']
 
-
-## Get help
-
-**Many problems during installation are related to misspelled paths or command line instructions.**
-
-If you run into problems with the above instructions, the preferred way to ask
-for help is through the issue tracker of the current repository at https://github.com/BlockResearchGroup/WS_Anagni2019/issues
-such that others can benefit from the discussion.
-
-Otherwise you can also contact us via email at dellendice@arch.ethz.ch.
-
-![Issue Tracker](images/issue-tracker.png)
-
 ## Help
 
 If you need help with the installation process, please post a note on the workshop Slack channel: 
+
+Otherwise, you can also contact us via email at dellendice@arch.ethz.ch.
+
 
