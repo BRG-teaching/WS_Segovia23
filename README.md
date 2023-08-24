@@ -33,24 +33,15 @@ Time | Topic
 15.00 - 16.30 | COMPAS Masonry workshop - Part 1 (CRA) - Dr. Alessandro Dell'Endice
 17.00 - 18.15 | COMPAS Masonry workshop - Part 2 (TNO) - Dr. Ricardo Maia Avelino
 
- 
+</br>
+
 ## Preparations
 
-**1. Clean up**
+**1. Requirements**
 
-*   If you have an old version of Anaconda installed (for example Anaconda 2), please uninstall it.
-*   If you have a version of Python registered on your `PATH`, please remove it (Windows only).
-
-**2. Install required software**
-
-*Note that this may take a while.*
-
-*   [Anaconda 3](https://www.anaconda.com/distribution/)
-*   [Rhino](https://www.rhino3d.com/download)
-*   [Sublime Text 3](https://www.sublimetext.com/3)
-*   [Git](https://git-scm.com/downloads) (Windows only)
-*   [3DEC demo version](https://www.itascacg.com/software-demo) (Windows only)
-*   [Microsoft Visual C++ Compiler for Python 2.7](https://www.microsoft.com/en-us/download/details.aspx?id=44266) (Windows only)
+* [Anaconda 3](https://www.anaconda.com/distribution/)
+* [Rhino 6/7](https://www.rhino3d.com/download)
+* [Visual Studio Code](https://code.visualstudio.com/): Any python editor works, but we recommend [VSCode + extensions](https://compas.dev/compas/latest/gettingstarted/vscode.html)
 
 During the installation of the various tools, just accept all default settings.
 The default location for installing Anaconda is usually in the home directory.
@@ -72,21 +63,13 @@ This results in the following recommended installation directories for Anaconda.
 ~/anaconda3
 ```
 
-**If you are using Rhino 5 on Windows, you have to upgrade the built-in IronPython to version `2.7.5`.
-Not to the newest version, but to this specific version.**
-There are [detailed instructions](https://compas-dev.github.io/main/environments/rhino.html)
-in the COMPAS documentation that explain how to do this.
-
-Instructions for configuring Sublime Text are also available in the COMPAS docs:
-https://compas-dev.github.io/main/environments/sublimetext.html
-
-**3. Download repository**
+**2. Download repository**
 
 Finally, download the workshop repository to your computer and unzip it.
 You should be on the [main repository page](https://github.com/BlockResearchGroup/WS_Anagni2019) now.
 The download button is green and somewhere on the top right of the page.
 
-![Download WS_Anagni2019](images/download-repo.png)
+![Download WS_Segovia23](images/Segovia_repo.png)
 
 Use a sensible location for the download so you can easily find it afterwards.
 For example, create a folder called "Workshops" on your home drive and unzip the repository there.
@@ -102,9 +85,9 @@ For example, create a folder called "Workshops" on your home drive and unzip the
 ```
 ~/Workshops/WS_Anagni2019
 ```
+## Installation
 
-
-## The command line
+** The command line**
 
 Many instructions in the next sections will have to be run from "the command line".
 
@@ -118,63 +101,34 @@ On Mac, use the "Terminal".
 
 **For simplicity, this guide will refer to both Terminal and Anaconda Prompt as "the command line".**
 
-![The command line](images/the-command-line.png)
-
-
-## Installation
+![The command line](images/command_line.png)
 
 We will use the command line to install the COMPAS Python packages (and their dependencies) required for the workshop.
 
-First, navigate to the root folder of the workshop repository (the folder containing the file `environment.yml`).
-For example, if you used the download path from above, do
+> **NOTE**: If you're on Windows, all commands below have to be executed in the *Anaconda Prompt* (NOT the *Command Prompt*)
 
-*On Windows*
+We use `conda` to make sure we have clean, isolated environment for dependencies.
 
-```bash
-cd %USERPROFILE%\Workshops\WS_Anagni2019
-conda env update -f environment.yml
-```
+<details><summary>First time using <code>conda</code>?</summary>
+<p>
 
-*On Mac*
+Make sure you run this at least once:
 
-```bash
-cd ~/Workshops/WS_Anagni2019
-conda env update -f environment.yml
-```
+    (base) conda config --add channels conda-forge
 
-Finally, verify the installation using an interactive Python session.
-Start the session by typing `python` on the command line. 
-Then try to import the packages that were just installed.
+</p>
+</details>
 
-```python
->>> import compas
->>> import compas_tna
->>> import compas_assembly
->>> import compas_rbe
->>> exit()
-```
+    (base) conda env create -f https://dfab.link/mcneel22.yml
 
-![Test installation](images/test-installation.png)
+### Add to Rhino
 
+    (base)  conda activate WS_Segovia23
+    (WS_Segovia23) python -m compas_rhino.install -v 7.0
 
-## Rhino
-
-If this is the first time you are using Rhino 6 for Windows, or if you have never opened its
+If this is the first time you are using Rhino for Windows, or if you have never opened its
 PythonScriptEditor before, do so now: open Rhino and open the editor by typing `EditPythonScript`.
 Then simply close Rhino again.
-
-To install the COMPAS packages, type the following on the command line
-
-```bash
-python -m compas_rhino.install -p compas compas_rhino compas_tna compas_assembly
-```
-
-On Windows, COMPAS packages are installed for Rhino 6 by default.
-To install COMPAS for Rhino 5 instead, do
-
-```bash
-python -m compas_rhino.install -v 5.0 -p compas compas_rhino compas_tna compas_assembly
-```
 
 To check the installation, launch Rhino, open the PythonScriptEditor, and try
 importing the COMPAS packages in a script.
@@ -183,17 +137,29 @@ Then run the script and if no errors pop up, you are good to go.
 ```python
 import compas
 import compas_rhino
-import compas_tna
 import compas_assembly
 ```
 
 ![Test Rhino](images/test-rhino.png)
 
+### Get the workshop files
 
-## Rhino UI
+Clone the repository:
 
-To install the Rhino (Python)CommandPlugin for `compas_tna`, follow the instructions
-available here https://github.com/BlockResearchGroup/compas_tna-UI
+```
+(WS_Segovia23) cd Documents
+(WS_Segovia23) git clone https://github.com/BRG-teaching/WS_Segovia23.git
+```
+
+### Verify installation
+
+    (WS_Segovia23) python -m compas
+
+    Yay! COMPAS is installed correctly!
+
+    COMPAS: 1.17.0
+    Python: 3.9.13 (CPython)
+    Extensions: ['compas-cgal', 'compas-gmsh', 'compas-rrc', 'compas-fab', 'compas-occ', 'compas-view2']
 
 
 ## Get help
@@ -208,73 +174,7 @@ Otherwise you can also contact us via email at dellendice@arch.ethz.ch.
 
 ![Issue Tracker](images/issue-tracker.png)
 
+## Help
 
-## Troubleshooting
-
-If the installation procedure outlined above failed,
-you can reset the environment and start over.
-
-**On Windows, make sure to run the command line (Anaconda Prompt) as administrator.**
-
-```bash
-conda install --revision 1
-```
-
-This sometimes takes a while (up to 10 min).
-Just follow the instructions, and update `conda` to the latest version once the
-roll back has completed.
-
-```bash
-conda update conda
-```
-
-You will also have to remove `compas_tna`, `compas_rbe`, and `compas_assembly`, "manually".
-
-```bash
-pip uninstall compas_tna
-pip uninstall compas_rbe
-pip uninstall compas_assembly
-```
-
-After all this, you can use the environment file to re-install all necessary packages.
-Or, better yet, install it in a separate environment called `anagni2019`.
-
-```bash
-conda create -n anagni2019 python=3.6
-conda activate anagni2019
-conda env update -f environment.yml
-```
-
-Check the installation with an interactive Python interpreter.
-
-**If you create a separate environment, make sure this environment is active when
-you launch the Python interpreter (type `python` on the command line) to run or test things.**
-
-```python
-import compas
-import compas_tna
-import compas_assembly
-import compas_rbe
-```
-
-Finally, update the Rhino installation.
-
-**If you create a separate environment, make sure this environment is active when
-you make changes to the Rhino installation. Only the functionality of the active
-environment at the time of running the following commands is available in Rhino.**
-
-```bash
-python -m compas_rhino.uninstall
-python -m compas_rhino.install -p compas compas_rhino compas_tna compas_assembly
-```
-
-Or, for Rhino 5 on Windows
-
-```bash
-python -m compas_rhino.uninstall -v 5.0
-python -m compas_rhino.install -v 5.0 -p compas compas_rhino compas_tna compas_assembly
-```
-
-The functionality of the installed environment is available the next time you
-start Rhino.
+If you need help with the installation process, please post a note on the workshop Slack channel: 
 
