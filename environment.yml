@@ -1,0 +1,17 @@
+name: WS_Segovia23
+channels:
+    - conda-forge
+
+dependencies:
+   - python=3.9
+   - pip
+   - git
+   - compas>=1.17.1
+   - compas_occ>=0.7.0
+   - compas_view2>=0.9.0
+   - ipopt
+   - pip:
+     - qt-material
+     - compas_assembly>=0.6.0
+     - compas_cra>=0.3.0
+     - compas_tno>=0.2.1
