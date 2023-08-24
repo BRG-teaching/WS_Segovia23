@@ -97,7 +97,7 @@ Make sure you run this at least once:
 </p>
 </details>
 
-    (base) conda env create -f https://dfab.link/mcneel22.yml
+    (base) conda env create -f https://github.com/BRG-teaching/WS_Segovia23/blob/main/environment.yml
 
 ### Add to Rhino
 
