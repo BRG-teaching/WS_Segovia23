@@ -8,6 +8,7 @@ from compas_assembly.datastructures import Block
 from compas_assembly.algorithms import assembly_interfaces
 from compas_assembly.viewer import DEMViewer
 from compas_cra.equilibrium import cra_solve
+from compas_cra.equilibrium import cra_penalty_solve
 
 HERE = os.path.dirname(__file__)
 ASSEMBLY = os.path.join(HERE, "stack-assembly.json")
@@ -48,6 +49,7 @@ assembly.set_boundary_condition(0)
 # =============================================================================
 
 cra_solve(assembly)
+# cra_penalty_solve(assembly)
 
 # =============================================================================
 # Export
