@@ -29,9 +29,7 @@ Optional: Another option to run convex problems is to use MATLAB. If you can not
 
 The workflow of **COMPAS TNO** is composed by the following four main elements summarised in the image below:
 
-.. figure:: [../_images/workflow.png](https://blockresearchgroup.github.io/compas_tno/latest/_images/workflow.png)
-    :figclass: figure
-    :class: figure-img img-fluid
+![TNO Workflow](https://blockresearchgroup.github.io/compas_tno/latest/_images/workflow.png)
 
 The steps are numbered herein.
 
