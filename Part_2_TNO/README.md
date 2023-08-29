@@ -27,6 +27,29 @@ Optional: Another option to run convex problems is to use MATLAB. If you can not
 
 ## Basics
 
+The workflow of **COMPAS TNO** is composed by the following four main elements summarised in the image below:
+
+.. figure:: ../_images/workflow.png
+    :figclass: figure
+    :class: figure-img img-fluid
+
+The steps are numbered herein.
+
+1. The [FormDiagram](https://blockresearchgroup.github.io/compas_tno/latest/tutorial/1_form.html) defines the flow of forces in the structure.
+2. The [Shape](https://blockresearchgroup.github.io/compas_tno/latest/tutorial/2_shape.html) object defines the geometry of the masonry to be analysed.
+3. The [Optimiser](https://blockresearchgroup.github.io/compas_tno/latest/tutorial/3_optimiser.html) object stores the settings that will be necessary to perform the optimisation.
+4. The [Analysis](https://blockresearchgroup.github.io/compas_tno/latest/tutorial/4_analysis.html) gathers the form diagram, shape and optimiser objects, performing preconditioning operations, runs the optimisation and visualises the solution.
+
+Below we will learn how to create these elements in the following parts of the tutorial.
+
+## Shape
+
+The shape object contains information about the 
+
+**Arch**
+
+.. literalinclude:: ../Part_2-1_scripts/1__create_shape-arch.py
+
 International Summer School on Historic Masonry - Segovia 2023
 
 *Computational assessment of masonry structures*
