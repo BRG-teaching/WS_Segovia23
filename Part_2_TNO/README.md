@@ -203,152 +203,148 @@ view.show()
 
 <img width="800" alt="image" src="https://github.com/BRG-teaching/WS_Segovia23/assets/36137188/7054eb66-54e6-431d-bd4b-92af43b23374">
 
-**Dome Geometry**
+**Dome Form Diagram**
 
-International Summer School on Historic Masonry - Segovia 2023
-
-*Computational assessment of masonry structures*
-
-* https://www.himass.org/
-* https://github.com/compas-dev/compas
-* https://github.com/BlockResearchGroup/compas_assembly
-* https://github.com/BlockResearchGroup/compas_cra
-* https://github.com/BlockResearchGroup/compas_tno
-
-![Segovia 2023](images/himass.png)
-
-## Schedule
-
-**Wednesday 30/08/2023**
-
-Time | Topic
----  | ---
-18.15 - 19.30 | Lecture Prof. Philippe Block
-
-**Friday 01/09/2023**
-
-Time | Topic
----  | ---
-18.15 - 18.50 | Lecture on Discrete Element Modelling (DEM) - Dr. Alessandro Dell'Endice
-18.55 - 19.30 | Lecture on Thrust Network Analysis (TNA) - Dr. Ricardo Maia Avelino
- 
-**Monday  04/09/2023**
-
-Time | Topic
----  | ---
-15.00 - 16.30 | COMPAS Masonry workshop - Part 1 (CRA) - Dr. Alessandro Dell'Endice
-17.00 - 18.15 | COMPAS Masonry workshop - Part 2 (TNO) - Dr. Ricardo Maia Avelino
-
-</br>
-
-## Preparations
-
-**1. Requirements**
-
-* [Anaconda 3](https://www.anaconda.com/distribution/)
-* [Rhino 6/7](https://www.rhino3d.com/download)
-* [Visual Studio Code](https://code.visualstudio.com/): Any python editor works, but we recommend [VSCode + extensions](https://compas.dev/compas/latest/gettingstarted/vscode.html)
-
-During the installation of the various tools, just accept all default settings.
-The default location for installing Anaconda is usually in the home directory.
-If it isn't, try to install it there anyway.
-And make sure not to register it on the `PATH` (Windows only).
-On Windows, the path to the home directory is stored in the variable `%USERPROFILE%`.
-On Mac, it is accessible through `~`.
-This results in the following recommended installation directories for Anaconda.
-
-*On Windows*
-
-```
-%USERPROFILE%\Anaconda3
-```
-
-*On Mac*
-
-```
-~/anaconda3
-```
-
-## Installation
-
-** The command line**
-
-Many instructions in the next sections will have to be run from "the command line".
-
-On Windows, use the "Anaconda Prompt" instead of the "Command Prompt", and make sure to run it *as administrator*.
-
-> To find the Anaconda Prompt open the Start Menu and type "Anaconda".
-> The Anaconda Prompt should already show up in the list of search results.
-> To launch is as administrator, right click and select "Run as administrator".
-
-On Mac, use the "Terminal".
-
-**For simplicity, this guide will refer to both Terminal and Anaconda Prompt as "the command line".**
-
-![The command line](images/command_line.png)
-
-We will use the command line to install the COMPAS Python packages (and their dependencies) required for the workshop.
-
-> **NOTE**: If you're on Windows, all commands below have to be executed in the *Anaconda Prompt* (NOT the *Command Prompt*)
-
-We use `conda` to make sure we have clean, isolated environment for dependencies.
-
-<details><summary>First time using <code>conda</code>?</summary>
-<p>
-
-Make sure you run this at least once:
-
-    (base) conda config --add channels conda-forge
-
-</p>
-</details>
-
-    (base) conda env create -f https://github.com/BRG-teaching/WS_Segovia23/blob/main/environment.yml
-
-### Add to Rhino
-
-    (base)  conda activate WS_Segovia23
-    (WS_Segovia23) python -m compas_rhino.install -v 7.0
-
-If this is the first time you are using Rhino for Windows, or if you have never opened its
-PythonScriptEditor before, do so now: open Rhino and open the editor by typing `EditPythonScript`.
-Then simply close Rhino again.
-
-To check the installation, launch Rhino, open the PythonScriptEditor, and try
-importing the COMPAS packages in a script.
-Then run the script and if no errors pop up, you are good to go.
+The form diagram of the dome needs to be created. Unlike the arch, there are more parameters that should be taken into account. A diagram based on a certain number of hoops and meridians is defined with the following code that will be used in the analysis.
 
 ```python
-import compas
-import compas_rhino
-import compas_assembly
+from compas_tno.shapes import Shape
+from compas_tno.diagrams import FormDiagram
+from compas_tno.viewers import Viewer
+
+# Dome parameters
+radius = 5.0  # Central radius of the dome
+thk = 0.50  # Thickness of the dome
+center = [5, 5, 0]  # coordinates of the center
+dome = Shape.create_dome(radius=radius, thk=thk, center=center)
+
+# Form diagram
+discretisation = [16, 20]
+form = FormDiagram.create_circular_radial_form(radius=radius, discretisation=discretisation)
+
+# Visualise 
+view = Viewer(form, dome)
+view.draw_form()
+view.draw_shape()
+view.show()
 ```
 
-![Test Rhino](images/test-rhino.png)
+<img width="800" alt="image" src="https://github.com/BRG-teaching/WS_Segovia23/assets/36137188/a31fa55d-2868-43eb-9620-5c97935f24b3">
 
-### Get the workshop files
+**Minimum thrust result**
 
-Clone the repository:
+Since the geometry and the form diagram are defined, the analysis can proceed with different objective functions, e.g., for obtaining the minimum thrust the following code applies:
 
+```phyhon
+from compas_tno.shapes import Shape
+from compas_tno.diagrams import FormDiagram
+from compas_tno.viewers import Viewer
+from compas_tno.analysis import Analysis
+
+# Dome parameters
+radius = 5.0  # Central radius of the dome
+thk = 0.50  # Thickness of the dome
+center = [5, 5, 0]  # coordinates of the center
+dome = Shape.create_dome(radius=radius, thk=thk, center=center)
+
+# Form diagram
+discretisation = [16, 20]
+form = FormDiagram.create_circular_radial_form(radius=radius, discretisation=discretisation)
+
+# Create analysis for minimum thrust result
+analysis = Analysis.create_minthrust_analysis(form,
+                                              dome,
+                                              printout=True,
+                                              solver='SLSQP')
+
+# Activate constraints, lump loads, set up and run analysis
+analysis.optimiser.set_constraints(['funicular', 'envelope', 'reac_bounds'])
+analysis.apply_selfweight()
+analysis.apply_envelope()
+analysis.apply_reaction_bounds()
+analysis.set_up_optimiser()
+analysis.run()
+
+# Visualise 
+view = Viewer(form, dome)
+view.draw_form()
+view.draw_shape()
+view.draw_cracks()
+view.show()
 ```
-(WS_Segovia23) cd Documents
-(WS_Segovia23) git clone https://github.com/BRG-teaching/WS_Segovia23.git
+
+<img width="800" alt="image" src="https://github.com/BRG-teaching/WS_Segovia23/assets/36137188/55369354-bd59-4a30-9ea6-09f61ae3d054">
+
+**Dome subjected to split displacement**
+
+Another internal state of interests is the internal stress state for the masonry in the verge of the foundations displacement, which can be obtained with the minimisation of the complementary energy using the following code, where first the 
+
+```python
+from compas_tno.shapes import Shape
+from compas_tno.diagrams import FormDiagram
+from compas_tno.viewers import Viewer
+from compas_tno.analysis import Analysis
+from compas.geometry import Vector, Point
+from numpy import array
+
+
+# 1. Shape geometric definition
+radius = 5.0
+thk = 0.50
+center = [5, 5]
+dome = Shape.create_dome(radius=radius, thk=thk, center=center)
+dome.ro = 1.0
+
+# 2. Form diagram geometric definition
+discretisation = [16, 20]
+form = FormDiagram.create_circular_radial_form(radius=radius, discretisation=discretisation)
+
+# 3. Define displacement field
+vector_supports = []
+vectors_plot = []
+base_plot = []
+xc = center[0]
+
+for key in form.vertices_where({'is_fixed': True}):
+    x, y, z = form.vertex_coordinates(key)
+    dXbi = [0, 0, 0]
+    if x - xc > 0.1:
+        dXbi = [1, 0, 0]
+        vectors_plot.append(Vector(*dXbi))
+        base_plot.append(Point(x, y, z))
+    if x - xc < -0.1:
+        dXbi = [-1, 0, 0]
+        vectors_plot.append(Vector(*dXbi))
+        base_plot.append(Point(x, y, z))
+
+    vector_supports.append(dXbi)
+
+dXb = array(vector_supports)
+
+# 4. Create analysis, run and visualise
+analysis = Analysis.create_compl_energy_analysis(form, dome, solver='IPOPT', support_displacement=dXb, printout=True)
+analysis.optimiser.set_constraints(['funicular', 'envelope', 'reac_bounds'])
+analysis.apply_selfweight()
+analysis.apply_envelope()
+analysis.apply_reaction_bounds()
+analysis.set_up_optimiser()
+analysis.run()
+
+view = Viewer(form, dome)
+view.scale_edge_thickness(5.0)
+view.draw_form()
+view.draw_shape()
+view.draw_reactions(extend_reactions=True)
+view.draw_cracks()
+for i in range(len(vectors_plot)):
+    vector = vectors_plot[i]
+    base = base_plot[i]
+    view.draw_vector(vector=vector, base=base)
+view.show()
 ```
 
-### Verify installation
+<img width="800" alt="image" src="https://github.com/BRG-teaching/WS_Segovia23/assets/36137188/5f37e401-7fca-47c6-9cad-9842bd5c41c2">
 
-    (WS_Segovia23) python -m compas
+## Cross vault analysis
 
-    Yay! COMPAS is installed correctly!
-
-    COMPAS: 1.17.0
-    Python: 3.9.13 (CPython)
-    Extensions: ['compas-cgal', 'compas-gmsh', 'compas-rrc', 'compas-fab', 'compas-occ', 'compas-view2']
-
-## Help
-
-If you need help with the installation process, please post a note on the workshop Slack channel: 
-
-Otherwise, you can also contact us via email at dellendice@arch.ethz.ch.
-
-
+...
