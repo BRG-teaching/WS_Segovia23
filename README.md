@@ -97,12 +97,16 @@ Make sure you run this at least once:
 </p>
 </details>
 
-    (base) conda env create -f https://github.com/BRG-teaching/WS_Segovia23/blob/main/environment.yml
-
+```
+(base) conda create env -n WS_Segovia23
+(base) conda activate WS_Segovia23
+(WS_Segovia23) cd Documents
+(WS_Segovia23) git clone https://github.com/BRG-teaching/WS_Segovia23.git
+```
+  
 ### Add to Rhino
 
-    (base)  conda activate WS_Segovia23
-    (WS_Segovia23) python -m compas_rhino.install -v 7.0
+    (WS_Segovia23) python -m compas_rhino.install -v 7.0 -p compas compas_rhino compas_assembly compas_cra compas_tno
 
 If this is the first time you are using Rhino for Windows, or if you have never opened its
 PythonScriptEditor before, do so now: open Rhino and open the editor by typing `EditPythonScript`.
@@ -116,17 +120,8 @@ Then run the script and if no errors pop up, you are good to go.
 import compas
 import compas_rhino
 import compas_assembly
-```
-
-![Test Rhino](images/test-rhino.png)
-
-### Get the workshop files
-
-Clone the repository:
-
-```
-(WS_Segovia23) cd Documents
-(WS_Segovia23) git clone https://github.com/BRG-teaching/WS_Segovia23.git
+import compas_cra
+import compas_tno
 ```
 
 ### Verify installation
