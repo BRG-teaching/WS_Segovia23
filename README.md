@@ -98,7 +98,7 @@ Make sure you run this at least once:
 </details>
 
 ```
-(base) conda create env -n WS_Segovia23
+(base) conda create -n WS_Segovia23
 (base) conda activate WS_Segovia23
 (WS_Segovia23) cd Documents
 (WS_Segovia23) git clone https://github.com/BRG-teaching/WS_Segovia23.git
