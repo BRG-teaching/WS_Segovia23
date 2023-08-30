@@ -84,7 +84,7 @@ print('Arch SWT: {0:.2f} kN'.format(swt))
 ```
 
 ```python
->> Arch SWT: 6.2 kN
+>> Arch SWT: 6.28 kN
 ```
 
 **Form Diagram**
