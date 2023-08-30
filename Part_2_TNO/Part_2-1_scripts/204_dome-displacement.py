@@ -6,25 +6,18 @@ from compas.geometry import Vector, Point
 from numpy import array
 
 
-# ----------------------------------------
 # 1. Shape geometric definition
-# ----------------------------------------
 radius = 5.0
 thk = 0.50
 center = [5, 5]
 dome = Shape.create_dome(radius=radius, thk=thk, center=center)
 dome.ro = 1.0
 
-# ----------------------------------------
 # 2. Form diagram geometric definition
-# ----------------------------------------
 discretisation = [16, 20]
 form = FormDiagram.create_circular_radial_form(radius=radius, discretisation=discretisation)
 
-# ----------------------------------------
 # 3. Define displacement field
-# ----------------------------------------
-
 vector_supports = []
 vectors_plot = []
 base_plot = []
@@ -46,9 +39,7 @@ for key in form.vertices_where({'is_fixed': True}):
 
 dXb = array(vector_supports)
 
-# --------------------------------------------
 # 4. Create analysis, run and visualise
-# --------------------------------------------
 analysis = Analysis.create_compl_energy_analysis(form, dome, solver='IPOPT', support_displacement=dXb, printout=True)
 analysis.optimiser.set_constraints(['funicular', 'envelope', 'reac_bounds'])
 analysis.apply_selfweight()
