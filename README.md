@@ -139,6 +139,13 @@ Clone the repository:
     Python: 3.9.13 (CPython)
     Extensions: ['compas-cgal', 'compas-gmsh', 'compas-rrc', 'compas-fab', 'compas-occ', 'compas-view2']
 
+## Next steps
+
+When everything works correctly, continue to the two dedicated pages of the workshop parts and follow each program. Scripts to run each task in the workshop parts are contained in the corresponding folders:
+
+- [Link to COMPAS Masonry workshop - Part 1 (CRA)](https://github.com/BRG-teaching/WS_Segovia23/tree/main/Part_1_CRA)
+- [Link to COMPAS Masonry workshop - Part 2 (TNO)](https://github.com/BRG-teaching/WS_Segovia23/tree/main/Part_2_TNO)
+
 ## Help
 
 If you need help with the installation process, please post a note on the workshop Slack channel: 
