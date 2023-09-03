@@ -2,7 +2,7 @@
 
 In part 2 of this workshop, you will learn how to use COMPAS TNO to assess existing masonry structures.
 
-## Introduction
+## 1. Introduction
 
 COMPAS TNO is a Python package to find admissible thrust networks in masonry vaulted structures.
 
@@ -15,7 +15,7 @@ In this workshop, we will go through the base functionalities of the plug-in to 
 * [COMPAS TNO Homepage](https://blockresearchgroup.github.io/compas_tno/)
 * [COMPAS TNO API](https://blockresearchgroup.github.io/compas_tno/latest/api.html)
 
-## Preparation
+## 2. Preparation
 
 If you have already installed the base configurations of the workshop, you are already all set to use the initial functionalities of COMPAS TNO. However, in this workshop, you will need to obtain a license to MOSEK to run convex optimisation problems. Instructions on how to get and install a MOSEK license are listed here:
 
@@ -25,7 +25,7 @@ Optional: Another option to run convex problems is to use MATLAB. If you can not
 
 * [Optional: Set-up MATLAB and CVX](https://blockresearchgroup.github.io/compas_tno/latest/gettingstarted/solvers.html#mosek-1)
 
-## Basics
+## 3. Basics
 
 The workflow of **COMPAS TNO** is composed of the following elements summarised in the image below:
 
@@ -40,7 +40,7 @@ The steps are numbered herein.
 
 You'll be able to go over the [TNO Tutorial](https://blockresearchgroup.github.io/compas_tno/latest/tutorial.html) to learn the role of these elements and how to create them. This workshop will focus on creating meaningful structural analysis using TNO. Different problems are studied in the following sections.
 
-## Arch analysis
+## 4. Arch analysis
 
 This first example analyses a parametric arch and obtains the minimum and maximum horizontal thrusts.
 
@@ -184,7 +184,7 @@ analysis = Analysis.create_maxthrust_analysis(form,
 
 A series of other objectives can also be incorporated into this problem. For this, see the [types of analyses](https://blockresearchgroup.github.io/compas_tno/latest/api/generated/compas_tno.analysis.Analysis.html#compas_tno.analysis.Analysis) that can be created.
 
-## Dome analysis
+## 5. Dome analysis
 
 **Dome Geometry**
 
@@ -241,7 +241,7 @@ view.show()
 
 Since the geometry and the form diagram are defined, the analysis can proceed with different objective functions, e.g., for obtaining the minimum thrust, the following code applies:
 
-```phyhon
+```python
 from compas_tno.shapes import Shape
 from compas_tno.diagrams import FormDiagram
 from compas_tno.viewers import Viewer
@@ -351,7 +351,7 @@ view.show()
 
 <img width="800" alt="image" src="https://github.com/BRG-teaching/WS_Segovia23/assets/36137188/5f37e401-7fca-47c6-9cad-9842bd5c41c2">
 
-## Cross vault analysis
+## 6. Cross vault analysis
 
 **Geometry and form diagram**
 
@@ -501,6 +501,64 @@ viewer.show()
 
 <img width="800" alt="image" src="https://github.com/BRG-teaching/WS_Segovia23/assets/36137188/be0ad7e2-73c4-474a-b668-42d4f6c7004a">
 
+## 7. Interactive example in Rhinoceros
+
+The final example of the workshop presents a structure that was analysed in the 2021 edition of the HIMASS workshop. It's the assessment of St. Angelo church in Anagni, Italy. A Rhino file is placed in the repository titled ``vault_example-TNO.3dm``. When you open the file, it should look like in the following figure:
+
+<img width="800" alt="image" src="https://github.com/BRG-teaching/WS_Segovia23/assets/36137188/aba99aec-bf0d-4156-a1ca-1ce0ab0c2624">
+
+Important: To execute script ``401_rhino_example.py`` in the repository, you will need to have installed TNO for Rhino as explained here:
+
+- [Install TNO in Rhino](https://blockresearchgroup.github.io/compas_tno/latest/gettingstarted/rhino.html)
+
+In the layers of the Rhino file you will find the following:
+
+- form_1: the lines of the form diagram that we are going to use,
+- form_2: empty layer for you to draw your form diagram,
+- extrados: with the extrados mesh of the vault in St. Angelo,
+- intrados: with the intrados mesh of the vault in St. Angelo,
+- supports: the supports of the form diagram,
+- displacements: vectors that we will use to apply displacement in the vault,
+- loads: load vectors that we will apply in the vault.
+
+To run a script in Rhino you need to type the command ``RunPythonScript`` and then navigate and open script ``401_rhino_example.py`` where you saved it.
+
+The script will ask for successive inputs to run the analysis for you. For example. For the Minimum and maximum thrust analysis
+
+1. **Select the lines for the form diagram:** select the lines in layer form_1
+2. **Select the supports in the form diagram:** select the supports in support layer corresponding to the 4 corners of the structure
+3. **Select the intrados mesh:** select the intrados mesh
+3. **Select the extrados mesh:** select the extrados mesh
+4. **Set density of masonry:** the value of 20 kN/m3 is suggested
+5. **Set the average thickness of masonry:** write the average thickness of the vault (default 0.25m)
+6. **Set Objective of the Analysis:** four options appear: minimum thrust / maximum thrust / displacement / Maximum load. Select the analysis desired for your purpose and continue.
+
+If you select the minimum or maximum thrust objectives, the analysis will run and display the solution. 
+
+For the minimum thrust solution the following is obtained:
+
+<img width="800" alt="image" src="https://github.com/BRG-teaching/WS_Segovia23/assets/36137188/8c1677c2-f6dd-4c91-9434-06873c4a36ce">
+
+Note that new layers were created with the solution and sublayers to display individual axial forces, etc.
+
+If you proceed with the analysis for displacement or loads, you will be asked to provide the vector for displacing the supports or the external loads. For displacements: 
+
+8. **(Optional)Select displacement at foundations:** Here, you will be asked to provide one (or multiple) vectors corresponding to the supports of the vault. If you'd like to continue adding vectors, please feel free to press to continue it. Only vectors related to supports defined in the form diagram can be input. Since we only supported the four corners, only corner displacements are acceptable. In the layer ``displacements`` a pair of example supports is given. Note that the starting point needs to match the projection of the support in the form diagram.
+
+The solution expected for the pair of support displacements is shown below. It corresponds to the network after the right side of the vault suffered an infinitesimal settlement.
+
+<img width="800" alt="image" src="https://github.com/BRG-teaching/WS_Segovia23/assets/36137188/15d6d1a5-fba6-419f-90aa-8639b355f449">
+
+If the goal is to maximize vertical applied loads the instruction is:
+
+8. **(Optional)Select external loads:** Loads must be vertical and also applied at points that project into nodes on the form diagram. Layer ``loads`` come with three-point loads that can be added as an example. The objective function will maximize the multiplier of that load. When the solution appears ``fopt`` will represent the maximum multiplier obtained by the solver.
+
+The expected solution is presented below. The optimal value of the problem (129.84) enables to compute the total load applied. The vectors were unitary so, the total load applied is 3*129.8 kN = 389.4 kN.
+
+<img width="1049" alt="image" src="https://github.com/BRG-teaching/WS_Segovia23/assets/36137188/1af60372-542c-4401-9b2b-5f522b80e1ef">
+
 ## Do it yourself
 
-By adapting the parametric models presented at this workshop, users are able to analyse a wide range of 3D problems in masonry structures. Go ahead and use TNO in your next ptoject. If you have questions write to mricardo@ethz.ch.
+By adapting the parametric models presented at this workshop and playing with the script provided for analysing vaults from Rhino, users can analyse a wide range of 3D problems in masonry structures. Go ahead and use TNO in your next project. 
+
+If you have further questions, please address them to mricardo@ethz.ch.
