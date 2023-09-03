@@ -3,7 +3,6 @@ from compas_tno.diagrams import FormDiagram
 from compas_tno.viewers import Viewer
 from compas_tno.analysis import Analysis
 from compas.geometry import Vector, Point
-from numpy import array
 
 
 # 1. Shape geometric definition
@@ -37,7 +36,7 @@ for key in form.vertices_where({'is_fixed': True}):
 
     vector_supports.append(dXbi)
 
-dXb = array(vector_supports)
+dXb = vector_supports
 
 # 4. Create analysis, run and visualise
 analysis = Analysis.create_compl_energy_analysis(form, dome, solver='IPOPT', support_displacement=dXb, printout=True)
